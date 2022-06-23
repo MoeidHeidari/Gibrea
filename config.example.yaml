@@ -1,0 +1,28 @@
+config:
+  base_address: https://https://git.techpal.ru/
+  auth_token: 8c151ab6d25380a8b3018a2f5c4a40ac8ec06836
+  owner: comfortech
+  tasks:
+    - task:
+        service: github
+        name: gitub
+        data_set:
+          file: ""
+          max_stars: 50
+        continues_update:
+          enabled: true
+          interval: "1d"
+          multi_processing:
+            enabled: true
+            number_of_processes:  4
+        as_private: true
+        secured_data:
+          enabled: 
+          auth_tokens: ['','','','','','']
+          issue: true
+          wikis: true
+          branche: true
+          release: true
+          label: true
+          milstones: true 
+
