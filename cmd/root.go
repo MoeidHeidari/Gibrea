@@ -6,12 +6,12 @@ package cmd
 
 import (
 	"fmt"
+	"main/core/handlers"
 	"os"
 
 	"github.com/spf13/cobra"
 )
 
-//=================================================================================================================================================================================
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "main",
@@ -34,7 +34,8 @@ Gibrea is a batch aggregator program that aggregates a bunch of git repositories
 	Run: func(cmd *cobra.Command, args []string) {},
 }
 
-//=================================================================================================================================================================================
+// CmdStart is used to start the programm
+
 var CmdStart = &cobra.Command{
 	Use:   "start",
 	Short: "starts the gibrea programm",
@@ -43,13 +44,13 @@ var CmdStart = &cobra.Command{
 	// has an action associated with it:
 	Run: func(cmd *cobra.Command, args []string) {
 		config, _ := cmd.Flags().GetString("config")
-		assService, _ := cmd.Flags().GetBool("as-service")
-		fmt.Println(config, assService)
+		asService, _ := cmd.Flags().GetBool("as-service")
+		fmt.Println(config, asService)
+		handlers.StartHandler(config, asService)
 
 	},
 }
 
-//=================================================================================================================================================================================
 var CmdStop = &cobra.Command{
 	Use:   "stop",
 	Short: "stops the program with state persisted",
@@ -58,11 +59,11 @@ var CmdStop = &cobra.Command{
 	// has an action associated with it:
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("goodbye:(")
+		handlers.StopHandler()
 
 	},
 }
 
-//=================================================================================================================================================================================
 var CmdStatus = &cobra.Command{
 	Use:   "status",
 	Short: "shows the current status of the programm",
@@ -71,11 +72,11 @@ var CmdStatus = &cobra.Command{
 	// has an action associated with it:
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("current status")
+		handlers.StatusHandler()
 
 	},
 }
 
-//=================================================================================================================================================================================
 var CmdPause = &cobra.Command{
 	Use:   "pause",
 	Short: "pauses the prrogramm execution temorarily with last state persisted",
@@ -84,11 +85,11 @@ var CmdPause = &cobra.Command{
 	// has an action associated with it:
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("program paused")
+		handlers.PauseHandler()
 
 	},
 }
 
-//=================================================================================================================================================================================
 var CmdLogs = &cobra.Command{
 	Use:   "logs",
 	Short: "shows the the logs of running program",
@@ -99,11 +100,11 @@ var CmdLogs = &cobra.Command{
 
 		printLogFilePath, _ := cmd.Flags().GetString("print")
 		fmt.Println(printLogFilePath)
+		handlers.LogsHandler(printLogFilePath)
 
 	},
 }
 
-//=================================================================================================================================================================================
 var CmdResum = &cobra.Command{
 	Use:   "resum",
 	Short: "reads the last state of the program and resumes the execution",
@@ -112,13 +113,11 @@ var CmdResum = &cobra.Command{
 	// has an action associated with it:
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("program resumed")
+		handlers.ResumHandler()
 
 	},
 }
 
-//=================================================================================================================================================================================
-//=================================================================================================================================================================================
-//=================================================================================================================================================================================
 // Execute adds all child commands to the root command and sets flags appropriately.
 // This is called by main.main(). It only needs to happen once to the rootCmd.
 func Execute() {
@@ -137,7 +136,6 @@ func Execute() {
 	}
 }
 
-//=================================================================================================================================================================================
 func init() {
 	// Here you will define your flags and configuration settings.
 	// Cobra supports persistent flags, which, if defined here,
@@ -149,5 +147,3 @@ func init() {
 	// when this action is called directly.
 	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
-
-//=================================================================================================================================================================================
