@@ -6,7 +6,7 @@ package cmd
 
 import (
 	"fmt"
-	"main/core/handlers"
+	core "main/core/handlers"
 	"os"
 
 	"github.com/spf13/cobra"
@@ -46,7 +46,7 @@ var CmdStart = &cobra.Command{
 		config, _ := cmd.Flags().GetString("config")
 		asService, _ := cmd.Flags().GetBool("as-service")
 		fmt.Println(config, asService)
-		handlers.StartHandler(config, asService)
+		core.StartHandler(config, asService)
 
 	},
 }
@@ -59,7 +59,7 @@ var CmdStop = &cobra.Command{
 	// has an action associated with it:
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("goodbye:(")
-		handlers.StopHandler()
+		core.StopHandler()
 
 	},
 }
@@ -72,7 +72,7 @@ var CmdStatus = &cobra.Command{
 	// has an action associated with it:
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("current status")
-		handlers.StatusHandler()
+		core.StatusHandler()
 
 	},
 }
@@ -85,7 +85,7 @@ var CmdPause = &cobra.Command{
 	// has an action associated with it:
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("program paused")
-		handlers.PauseHandler()
+		core.PauseHandler()
 
 	},
 }
@@ -100,7 +100,7 @@ var CmdLogs = &cobra.Command{
 
 		printLogFilePath, _ := cmd.Flags().GetString("print")
 		fmt.Println(printLogFilePath)
-		handlers.LogsHandler(printLogFilePath)
+		core.LogsHandler(printLogFilePath)
 
 	},
 }
@@ -113,7 +113,7 @@ var CmdResum = &cobra.Command{
 	// has an action associated with it:
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("program resumed")
-		handlers.ResumHandler()
+		core.ResumHandler()
 
 	},
 }

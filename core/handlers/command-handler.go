@@ -1,12 +1,22 @@
-package handlers
+package core
 
 import (
 	"fmt"
+	"main/config"
+
+	"github.com/jinzhu/configor"
 )
 
 //handles start command with it's specified arguments
-func StartHandler(config string, isService bool) {
-	fmt.Println("start handler", config, isService)
+func StartHandler(configPath string, isService bool) (bool, error) {
+
+	err := configor.New(&configor.Config{ErrorOnUnmatchedKeys: true}).Load(&config.ConfigStruct, configPath)
+
+	if err != nil {
+		return false, err
+	}
+	fmt.Println("start handler", config.ConfigStruct.Config.BaseAddress, isService)
+	return true, err
 
 }
 
