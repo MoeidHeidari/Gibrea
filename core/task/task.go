@@ -2,25 +2,28 @@ package core
 
 import (
 	"main/config"
-)
+	core "main/core/repository"
 
-type JobStatus string
-
-const (
-	pending JobStatus = "pending"
-	running JobStatus = "running"
-	done    JobStatus = "done"
-	failed  JobStatus = "failed"
+	"github.com/google/uuid"
 )
 
 type Task struct {
-	taskId            int
+	taskId            uuid.UUID
 	taskConfiguration config.Task
+	page              core.RepositoryMigrationPage
 }
 
-type Job struct {
-	jobId     int
-	jobConfig config.Config
-	tasks     []Task
-	status    JobStatus
+type TaskLog struct {
+	taskId  uuid.UUID
+	jobId   uuid.UUID
+	message string
+}
+
+func newTask(page core.RepositoryMigrationPage, config config.Task) uuid.UUID {
+	var newTask Task
+	uuid := uuid.New()
+	newTask.taskId = uuid
+	newTask.page = page
+	newTask.taskConfiguration = config
+	return uuid
 }
