@@ -28,7 +28,7 @@ type SecuredData struct {
 }
 type Task struct {
 	Name            string          `yaml:"name"`
-	Service			string			`yaml:"service"`
+	Service         string          `yaml:"service"`
 	DataSet         DataSet         `yaml:"data_set"`
 	ContinuesUpdate ContinuesUpdate `yaml:"continues_update"`
 	AsPrivate       bool            `yaml:"as_private"`
@@ -43,4 +43,5 @@ type Config struct {
 	Owner       string  `yaml:"owner"`
 	Tasks       []Tasks `yaml:"tasks"`
 }
+
 var ConfigStruct ConfigStructure

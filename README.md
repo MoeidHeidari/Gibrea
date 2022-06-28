@@ -1,1 +1,2 @@
-# Repo-aggregator
+# Gibrea
+Gitea batch repository aggregator
