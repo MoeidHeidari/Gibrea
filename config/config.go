@@ -1,5 +1,7 @@
 package config
 
+import "github.com/jinzhu/configor"
+
 type ConfigStructure struct {
 	Config Config `yaml:"config"`
 }
@@ -45,3 +47,8 @@ type Config struct {
 }
 
 var ConfigStruct ConfigStructure
+
+func Load(path string) (*ConfigStructure, error) {
+	error := configor.New(&configor.Config{ErrorOnUnmatchedKeys: true}).Load(&ConfigStruct, path)
+	return &ConfigStruct, error
+}
