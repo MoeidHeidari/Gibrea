@@ -5,21 +5,21 @@ type RepositoryMigrationPage struct {
 }
 
 type RepositoryMigration struct {
-	name        string
-	link        string
-	description string
-	stars       int
+	Name        string
+	Link        string
+	Description string
+	Stars       int
 }
 
-var pages []RepositoryMigrationPage
+var Pages []RepositoryMigrationPage
 
 func AddMigration(repo RepositoryMigration) int {
-	if len(pages) == 0 || len(pages[len(pages)-1].page_repositories) == 1000 {
+	if len(Pages) == 0 || len(Pages[len(Pages)-1].page_repositories) == 1000 {
 		var page RepositoryMigrationPage
 		page.page_repositories = append(page.page_repositories, repo)
-		pages = append(pages, page)
-		return (len(pages) - 1)
+		Pages = append(Pages, page)
+		return (len(Pages) - 1)
 	}
-	pages[len(pages)-1].page_repositories = append(pages[len(pages)-1].page_repositories, repo)
-	return (len(pages) - 1)
+	Pages[len(Pages)-1].page_repositories = append(Pages[len(Pages)-1].page_repositories, repo)
+	return (len(Pages) - 1)
 }

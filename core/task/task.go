@@ -25,5 +25,8 @@ func newTask(page core.RepositoryMigrationPage, config config.Task) uuid.UUID {
 	newTask.taskId = uuid
 	newTask.page = page
 	newTask.taskConfiguration = config
+	tasks = append(tasks, newTask)
 	return uuid
 }
+
+var tasks []Task
