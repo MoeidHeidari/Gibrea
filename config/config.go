@@ -2,22 +2,31 @@ package config
 
 import "github.com/jinzhu/configor"
 
+//########################################################################################################################
 type ConfigStructure struct {
 	Config Config `yaml:"config"`
 }
+
+//...................................................................
 type DataSet struct {
 	File     string `yaml:"file"`
 	MaxStars int    `yaml:"max_stars"`
 }
+
+//...................................................................
 type MultiProcessing struct {
 	Enabled           bool `yaml:"enabled"`
 	NumberOfProcesses int  `yaml:"number_of_processes"`
 }
+
+//...................................................................
 type ContinuesUpdate struct {
 	Enabled         bool            `yaml:"enabled"`
 	Interval        string          `yaml:"interval"`
 	MultiProcessing MultiProcessing `yaml:"multi_processing"`
 }
+
+//...................................................................
 type SecuredData struct {
 	Enabled    interface{} `yaml:"enabled"`
 	AuthTokens []string    `yaml:"auth_tokens"`
@@ -28,6 +37,8 @@ type SecuredData struct {
 	Label      bool        `yaml:"label"`
 	Milstones  bool        `yaml:"milstones"`
 }
+
+//...................................................................
 type Task struct {
 	Name            string          `yaml:"name"`
 	Service         string          `yaml:"service"`
@@ -36,9 +47,13 @@ type Task struct {
 	AsPrivate       bool            `yaml:"as_private"`
 	SecuredData     SecuredData     `yaml:"secured_data"`
 }
+
+//...................................................................
 type Tasks struct {
 	Task Task `yaml:"task"`
 }
+
+//...................................................................
 type Config struct {
 	BaseAddress string  `yaml:"base_address"`
 	AuthToken   string  `yaml:"auth_token"`
@@ -46,8 +61,10 @@ type Config struct {
 	Tasks       []Tasks `yaml:"tasks"`
 }
 
+//...................................................................
 var ConfigStruct ConfigStructure
 
+//========================================================================================================================
 func Load(path string) (*ConfigStructure, error) {
 	error := configor.New(&configor.Config{ErrorOnUnmatchedKeys: true}).Load(&ConfigStruct, path)
 	return &ConfigStruct, error

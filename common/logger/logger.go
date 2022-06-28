@@ -2,8 +2,15 @@ package common
 
 import "github.com/xtgo/uuid"
 
-type JobLog struct {
-	jobId     uuid.UUID
-	message   int
-	processId int
+type JobReport struct {
+	JobId     uuid.UUID
+	Message   int
+	ProcessId int
+}
+
+//...................................................................
+type TaskReprot struct {
+	taskId  uuid.UUID
+	jobId   uuid.UUID
+	message string
 }
