@@ -58,3 +58,14 @@ func TestAddbulkMigration(t *testing.T) {
 	assert.Equal(t, len(Pages[2].page_repositories), 1000)
 	assert.Equal(t, len(Pages[60].page_repositories), 24)
 }
+
+//========================================================================================================================
+func TestNewMigration(t *testing.T) {
+	stars, _ := faker.RandomInt(1)
+	var migration = NewMigration(faker.Name(), faker.URL(), faker.Sentence(), stars[0], func(migration RepositoryMigration) {
+		// do any operation...
+	})
+
+	assert.NotNil(t, migration)
+	assert.Equal(t, migration.Stars, stars[0])
+}

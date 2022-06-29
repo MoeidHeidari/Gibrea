@@ -1,11 +1,6 @@
 package core
 
-import (
-	"main/config"
-)
-
-type StartMigration func(options config.Config)
-type CancelMigration func()
+type MigrationRunFunc func(migration RepositoryMigration)
 
 type RepositoryMigrationPage struct {
 	page_repositories []RepositoryMigration
@@ -13,12 +8,11 @@ type RepositoryMigrationPage struct {
 
 //...................................................................
 type RepositoryMigration struct {
-	Name            string
-	Link            string
-	Description     string
-	Stars           int
-	StartMigration  StartMigration
-	CancelMigration func()
+	Name        string
+	Link        string
+	Description string
+	Stars       int
+	Run         MigrationRunFunc
 }
 
 //...................................................................
@@ -37,5 +31,14 @@ func AddMigration(repo RepositoryMigration) int {
 }
 
 //========================================================================================================================
+func NewMigration(name string, link string, description string, stars int, runFunc MigrationRunFunc) RepositoryMigration {
+	var repo RepositoryMigration
+	repo.Name = name
+	repo.Link = link
+	repo.Description = description
+	repo.Stars = stars
+	repo.Run = runFunc
+	return repo
+}
 
 //========================================================================================================================
