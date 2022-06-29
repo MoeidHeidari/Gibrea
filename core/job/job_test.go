@@ -28,12 +28,15 @@ func TestAddNewJob(t *testing.T) {
 	}
 
 	for _, page := range repository.Pages {
-		task.NewTask(page, config.Config.Tasks[0].Task)
+		task.NewTask(page, config.Config.Tasks[0].Task, func(task task.Task) task.TaskStatus {
+			// do any operation ...
+			return task.Status
+		})
 	}
 
 	NewJob(task.Tasks, func(job Job) JobStatus {
 		job.status = running
-		// network call...
+		// do any operation...
 		return job.status
 	})
 

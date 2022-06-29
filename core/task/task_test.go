@@ -15,7 +15,10 @@ func TestCreateNewTask(t *testing.T) {
 	assert.NoError(t, error, "Parse example config failed.")
 
 	var page core.RepositoryMigrationPage
-	var UID = NewTask(page, config.Config.Tasks[0].Task)
+	var UID = NewTask(page, config.Config.Tasks[0].Task, func(task Task) TaskStatus {
+		// do any operation ...
+		return task.Status
+	})
 	assert.NotZero(t, UID)
 
 }
@@ -39,7 +42,10 @@ func TestCreateNewTaskWithABunchOfMigrations(t *testing.T) {
 	}
 
 	for _, page := range core.Pages {
-		NewTask(page, config.Config.Tasks[0].Task)
+		NewTask(page, config.Config.Tasks[0].Task, func(task Task) TaskStatus {
+			// do any operation ...
+			return task.Status
+		})
 	}
 	assert.Equal(t, len(Tasks), 61)
 }
