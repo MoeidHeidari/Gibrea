@@ -19,9 +19,9 @@ const (
 )
 
 type Task struct {
-	taskId            uuid.UUID
-	taskConfiguration config.Task
-	page              core.RepositoryMigrationPage
+	TaskId            uuid.UUID
+	TaskConfiguration config.Task
+	Page              core.RepositoryMigrationPage
 	Run               RunTask
 	Status            TaskStatus
 }
@@ -36,10 +36,10 @@ Function to create a new task according to a page of repositories and configurat
 func NewTask(page core.RepositoryMigrationPage, config config.Task, runFunc RunTask) uuid.UUID {
 	var newTask Task
 	uuid := uuid.New()
-	newTask.taskId = uuid
-	newTask.page = page
+	newTask.TaskId = uuid
+	newTask.Page = page
 	newTask.Run = runFunc
-	newTask.taskConfiguration = config
+	newTask.TaskConfiguration = config
 	Tasks = append(Tasks, newTask)
 	return uuid
 }

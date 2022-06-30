@@ -20,10 +20,10 @@ func TestAddMigration(t *testing.T) {
 		AddMigration(migration)
 	}
 	assert.Equal(t, len(Pages), 4)
-	assert.Equal(t, len(Pages[0].page_repositories), 1000)
-	assert.Equal(t, len(Pages[1].page_repositories), 1000)
-	assert.Equal(t, len(Pages[2].page_repositories), 1000)
-	assert.Equal(t, len(Pages[3].page_repositories), 500)
+	assert.Equal(t, len(Pages[0].Page_repositories), 1000)
+	assert.Equal(t, len(Pages[1].Page_repositories), 1000)
+	assert.Equal(t, len(Pages[2].Page_repositories), 1000)
+	assert.Equal(t, len(Pages[3].Page_repositories), 500)
 }
 
 //========================================================================================================================
@@ -53,10 +53,10 @@ func TestAddbulkMigration(t *testing.T) {
 		AddMigration(migration)
 	}
 	assert.Equal(t, len(Pages), 61)
-	assert.Equal(t, len(Pages[0].page_repositories), 1000)
-	assert.Equal(t, len(Pages[1].page_repositories), 1000)
-	assert.Equal(t, len(Pages[2].page_repositories), 1000)
-	assert.Equal(t, len(Pages[60].page_repositories), 24)
+	assert.Equal(t, len(Pages[0].Page_repositories), 1000)
+	assert.Equal(t, len(Pages[1].Page_repositories), 1000)
+	assert.Equal(t, len(Pages[2].Page_repositories), 1000)
+	assert.Equal(t, len(Pages[60].Page_repositories), 24)
 }
 
 //========================================================================================================================

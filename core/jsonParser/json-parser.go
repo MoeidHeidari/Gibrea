@@ -20,11 +20,11 @@ type Pages struct {
 }
 
 //...................................................................
-var Seeder RepoList
+var Dataset RepoList
 
 //========================================================================================================================
-func Seed(path string) error {
+func ParseJson(path string) error {
 	repos, _ := ioutil.ReadFile(path)
-	err := json.Unmarshal(repos, &Seeder)
+	err := json.Unmarshal(repos, &Dataset)
 	return err
 }

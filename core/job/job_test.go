@@ -35,9 +35,9 @@ func TestAddNewJob(t *testing.T) {
 	}
 
 	NewJob(task.Tasks, func(job Job) JobStatus {
-		job.status = running
+		job.Status = Running
 		// do any operation...
-		return job.status
+		return job.Status
 	})
 
 	assert.Equal(t, len(Jobs), 1)

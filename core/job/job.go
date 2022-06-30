@@ -1,6 +1,7 @@
 package core
 
 import (
+	"errors"
 	"main/config"
 	core "main/core/task"
 	"os"
@@ -11,40 +12,50 @@ import (
 //########################################################################################################################
 type JobStatus string
 
+var ErrNotFound = errors.New("Resource was not found")
+
 type RunJob func(job Job) JobStatus
 
 //...................................................................
 const (
-	pending JobStatus = "pending"
-	running JobStatus = "running"
-	done    JobStatus = "done"
-	failed  JobStatus = "failed"
+	Pending JobStatus = "pending"
+	Running JobStatus = "running"
+	Done    JobStatus = "done"
+	Failed  JobStatus = "failed"
 )
 
 //...................................................................
 type Job struct {
-	jobId     uuid.UUID
-	processId int
-	jobConfig config.Config
-	tasks     []core.Task
-	status    JobStatus
+	JobId     uuid.UUID
+	ProcessId int
+	JobConfig config.Config
+	Tasks     []core.Task
+	Status    JobStatus
 	Run       RunJob
 }
 
 var Jobs []Job
 
 //========================================================================================================================
-func NewJob(tasks []core.Task, runFunc RunJob) uuid.UUID {
+func NewJob(tasks []core.Task, runFunc RunJob) Job {
 	var newJob Job
 	uid := uuid.New()
-	newJob.jobId = uid
+	newJob.JobId = uid
 	newJob.Run = runFunc
-	newJob.status = running
-	newJob.tasks = tasks
-	newJob.jobConfig = config.ConfigStruct.Config
-	newJob.processId = os.Getpid()
+	newJob.Status = Running
+	newJob.Tasks = tasks
+	newJob.JobConfig = config.ConfigStruct.Config
+	newJob.ProcessId = os.Getpid()
 	Jobs = append(Jobs, newJob)
-	return uid
+	return newJob
 }
 
 //========================================================================================================================
+func getJob(uid uuid.UUID) (*Job, error) {
+	for _, job := range Jobs {
+		if job.JobId == uid {
+			return &job, nil
+		}
+	}
+	return nil, ErrNotFound
+}

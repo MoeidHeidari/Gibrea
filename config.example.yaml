@@ -7,7 +7,7 @@ config:
         service: github
         name: gitub
         data_set:
-          file: ""
+          file: "all-list.json"
           max_stars: 50
         continues_update:
           enabled: true

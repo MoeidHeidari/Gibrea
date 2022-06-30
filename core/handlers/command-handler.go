@@ -3,6 +3,12 @@ package core
 import (
 	"fmt"
 	"main/config"
+	job "main/core/job"
+	parser "main/core/jsonParser"
+	repository "main/core/repository"
+	scheduler "main/core/scheduler"
+	seeder "main/core/seeder"
+	task "main/core/task"
 
 	"github.com/jinzhu/configor"
 )
@@ -16,7 +22,27 @@ func StartHandler(configPath string, isService bool) (bool, error) {
 	if err != nil {
 		return false, err
 	}
-	fmt.Println("start handler", config.ConfigStruct.Config.BaseAddress, isService)
+	parser.ParseJson(config.ConfigStruct.Config.Tasks[0].Task.DataSet.File)
+	job, _ := seeder.SeedAll(&config.ConfigStruct, parser.Dataset, func(migration repository.RepositoryMigration) {
+
+		fmt.Println("migration functionality")
+	}, func(task task.Task) task.TaskStatus {
+		fmt.Println("task with UID", task.TaskId, "with ", len(task.Page.Page_repositories), " repos has been started\n-----------------------------------------")
+		for _, migration := range task.Page.Page_repositories {
+			migration.Run(migration)
+		}
+		return task.Status
+	}, func(job job.Job) job.JobStatus {
+
+		fmt.Println("job with UID", job.JobId, "with ", len(job.Tasks), " tasks has been started\n-----------------------------------------")
+		for _, task := range job.Tasks {
+			task.Run(task)
+		}
+		return job.Status
+
+	})
+	scheduler.Schedule(job)
+
 	return true, err
 
 }

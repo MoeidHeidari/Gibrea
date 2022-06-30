@@ -3,7 +3,7 @@ package core
 type MigrationRunFunc func(migration RepositoryMigration)
 
 type RepositoryMigrationPage struct {
-	page_repositories []RepositoryMigration
+	Page_repositories []RepositoryMigration
 }
 
 //...................................................................
@@ -20,13 +20,13 @@ var Pages []RepositoryMigrationPage
 
 //========================================================================================================================
 func AddMigration(repo RepositoryMigration) int {
-	if len(Pages) == 0 || len(Pages[len(Pages)-1].page_repositories) == 1000 {
+	if len(Pages) == 0 || len(Pages[len(Pages)-1].Page_repositories) == 1000 {
 		var page RepositoryMigrationPage
-		page.page_repositories = append(page.page_repositories, repo)
+		page.Page_repositories = append(page.Page_repositories, repo)
 		Pages = append(Pages, page)
 		return (len(Pages) - 1)
 	}
-	Pages[len(Pages)-1].page_repositories = append(Pages[len(Pages)-1].page_repositories, repo)
+	Pages[len(Pages)-1].Page_repositories = append(Pages[len(Pages)-1].Page_repositories, repo)
 	return (len(Pages) - 1)
 }
 
