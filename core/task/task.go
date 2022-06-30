@@ -9,8 +9,11 @@ import (
 
 //########################################################################################################################
 type TaskStatus string
+
+//...................................................................
 type RunTask func(task Task) TaskStatus
 
+//...................................................................
 const (
 	pending TaskStatus = "pending"
 	running TaskStatus = "running"
@@ -18,6 +21,7 @@ const (
 	failed  TaskStatus = "failed"
 )
 
+//...................................................................
 type Task struct {
 	TaskId            uuid.UUID
 	TaskConfiguration config.Task

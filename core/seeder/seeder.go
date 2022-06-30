@@ -9,6 +9,7 @@ import (
 )
 
 //########################################################################################################################
+//Function to seed all the migrations
 func SeedMigrations(repos []parser.Repos, functionality repository.MigrationRunFunc) {
 	for i := 0; i < len(repos); i++ {
 		migration := repository.NewMigration(repos[i].Name, repos[i].Link, repos[i].Description, repos[i].Stars, functionality)
@@ -17,6 +18,7 @@ func SeedMigrations(repos []parser.Repos, functionality repository.MigrationRunF
 }
 
 //========================================================================================================================
+// Function to seed all the tasks
 func SeedTasks(pages []repository.RepositoryMigrationPage, config config.Task, functionality task.RunTask) {
 	for i := 0; i < len(pages); i++ {
 		task.NewTask(pages[i], config, functionality)
@@ -24,13 +26,14 @@ func SeedTasks(pages []repository.RepositoryMigrationPage, config config.Task, f
 }
 
 //========================================================================================================================
+//Function to seed a job with all the available tasks
 func SeedJob(tasks []task.Task, functionality job.RunJob) job.Job {
 	job := job.NewJob(tasks, functionality)
 	return job
 }
 
 //========================================================================================================================
-
+//Function to seed all (Jobs,Tasks,and migrations) with their functionalities
 func SeedAll(config *config.ConfigStructure, data parser.RepoList, migration_functionality repository.MigrationRunFunc, task_functionality task.RunTask, job_functionality job.RunJob) (job.Job, error) {
 	for _, page := range data.Pages {
 		SeedMigrations(page.Repos, migration_functionality)

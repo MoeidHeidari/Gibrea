@@ -25,7 +25,7 @@ func StartHandler(configPath string, isService bool) (bool, error) {
 	parser.ParseJson(config.ConfigStruct.Config.Tasks[0].Task.DataSet.File)
 	job, _ := seeder.SeedAll(&config.ConfigStruct, parser.Dataset, func(migration repository.RepositoryMigration) {
 
-		fmt.Println("migration functionality")
+		//To do:  do migration (network layer should be added)
 	}, func(task task.Task) task.TaskStatus {
 		fmt.Println("task with UID", task.TaskId, "with ", len(task.Page.Page_repositories), " repos has been started\n-----------------------------------------")
 		for _, migration := range task.Page.Page_repositories {

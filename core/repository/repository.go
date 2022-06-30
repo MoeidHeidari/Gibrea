@@ -1,12 +1,17 @@
 package core
 
+//########################################################################################################################
+//Migration Functionality signature
 type MigrationRunFunc func(migration RepositoryMigration)
 
+//...................................................................
+//Structure of a repository Migration page
 type RepositoryMigrationPage struct {
 	Page_repositories []RepositoryMigration
 }
 
 //...................................................................
+// Structure of a Repository migration
 type RepositoryMigration struct {
 	Name        string
 	Link        string
@@ -19,6 +24,7 @@ type RepositoryMigration struct {
 var Pages []RepositoryMigrationPage
 
 //========================================================================================================================
+// Function to add a migration to a page
 func AddMigration(repo RepositoryMigration) int {
 	if len(Pages) == 0 || len(Pages[len(Pages)-1].Page_repositories) == 1000 {
 		var page RepositoryMigrationPage
@@ -31,6 +37,7 @@ func AddMigration(repo RepositoryMigration) int {
 }
 
 //========================================================================================================================
+// Function to instantiate a new Migration
 func NewMigration(name string, link string, description string, stars int, runFunc MigrationRunFunc) RepositoryMigration {
 	var repo RepositoryMigration
 	repo.Name = name
@@ -40,5 +47,3 @@ func NewMigration(name string, link string, description string, stars int, runFu
 	repo.Run = runFunc
 	return repo
 }
-
-//========================================================================================================================

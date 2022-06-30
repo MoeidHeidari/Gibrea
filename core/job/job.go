@@ -17,6 +17,7 @@ var ErrNotFound = errors.New("Resource was not found")
 type RunJob func(job Job) JobStatus
 
 //...................................................................
+//Job statuses
 const (
 	Pending JobStatus = "pending"
 	Running JobStatus = "running"
@@ -25,6 +26,7 @@ const (
 )
 
 //...................................................................
+// Structure of a Job
 type Job struct {
 	JobId     uuid.UUID
 	ProcessId int
@@ -37,6 +39,7 @@ type Job struct {
 var Jobs []Job
 
 //========================================================================================================================
+// Function to make a new job instance
 func NewJob(tasks []core.Task, runFunc RunJob) Job {
 	var newJob Job
 	uid := uuid.New()
@@ -51,6 +54,7 @@ func NewJob(tasks []core.Task, runFunc RunJob) Job {
 }
 
 //========================================================================================================================
+// Function to return back a job associated with a UID
 func getJob(uid uuid.UUID) (*Job, error) {
 	for _, job := range Jobs {
 		if job.JobId == uid {
