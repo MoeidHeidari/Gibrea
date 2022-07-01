@@ -7,26 +7,43 @@ import (
 	"github.com/google/uuid"
 )
 
+//########################################################################################################################
+type TaskStatus string
+
+//...................................................................
+type RunTask func(task Task) TaskStatus
+
+//...................................................................
+const (
+	pending TaskStatus = "pending"
+	running TaskStatus = "running"
+	done    TaskStatus = "done"
+	failed  TaskStatus = "failed"
+)
+
+//...................................................................
 type Task struct {
-	taskId            uuid.UUID
-	taskConfiguration config.Task
-	page              core.RepositoryMigrationPage
+	TaskId            uuid.UUID
+	TaskConfiguration config.Task
+	Page              core.RepositoryMigrationPage
+	Run               RunTask
+	Status            TaskStatus
 }
 
-type TaskLog struct {
-	taskId  uuid.UUID
-	jobId   uuid.UUID
-	message string
-}
+//...................................................................
+var Tasks []Task
 
-func newTask(page core.RepositoryMigrationPage, config config.Task) uuid.UUID {
+//========================================================================================================================
+/**
+Function to create a new task according to a page of repositories and configuration file
+*/
+func NewTask(page core.RepositoryMigrationPage, config config.Task, runFunc RunTask) uuid.UUID {
 	var newTask Task
 	uuid := uuid.New()
-	newTask.taskId = uuid
-	newTask.page = page
-	newTask.taskConfiguration = config
-	tasks = append(tasks, newTask)
+	newTask.TaskId = uuid
+	newTask.Page = page
+	newTask.Run = runFunc
+	newTask.TaskConfiguration = config
+	Tasks = append(Tasks, newTask)
 	return uuid
 }
-
-var tasks []Task

@@ -6,18 +6,24 @@ type ConfigTestFactory struct {
 	owner      string
 	Tasks      []TaskTestFactory
 }
+
+//...................................................................
 type TaskTestFactory struct {
 	name    string
 	service string
 	DataSet DatasetTestFactory
 }
+
+//...................................................................
 type DatasetTestFactory struct {
 	File     string
 	MaxStars int
 }
 
+//...................................................................
 var ConfigFactory ConfigTestFactory
 
+//========================================================================================================================
 func InitFactory() {
 	ConfigFactory.base_url = "https://https://git.techpal.ru/"
 	ConfigFactory.auth_token = "8c151ab6d25380a8b3018a2f5c4a40ac8ec06836"
