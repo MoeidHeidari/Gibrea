@@ -3,7 +3,8 @@ module main
 go 1.13
 
 require (
-	github.com/bxcodec/faker/v3 v3.8.0 // indirect
+	github.com/bxcodec/faker/v3 v3.8.0
+	github.com/golang/protobuf v1.5.2
 	github.com/google/uuid v1.3.0
 	github.com/jinzhu/configor v1.2.1
 	github.com/kr/pretty v0.3.0 // indirect
