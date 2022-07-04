@@ -9,7 +9,7 @@ import (
 
 //to do....
 type HTTP_METHOD string
-type HTTP_REPONSE_CALLBACK func(response *http.Response, reftype interface{}) error
+type HTTP_REPONSE_CALLBACK func(response *http.Response) error
 
 //...................................................................
 const (
@@ -76,7 +76,7 @@ func PrepareHeaders(options *Request, req *http.Request) {
 
 //========================================================================================================================
 
-func Send(options Request, reftype interface{}) error {
+func Send(options Request) error {
 
 	data, reqBodyError := PrepareBody(options.Body)
 	if reqBodyError != nil {
@@ -92,10 +92,13 @@ func Send(options Request, reftype interface{}) error {
 	if err != nil {
 		return err
 	}
-	error := options.Callback(resp, reftype)
-	if error != nil {
-		return error
+	if options.Callback != nil {
+		error := options.Callback(resp)
+		if error != nil {
+			return error
+		}
 	}
+
 	return nil
 
 }
