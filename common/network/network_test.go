@@ -2,6 +2,7 @@ package common
 
 import (
 	"fmt"
+	baseRequest "main/common/network/requests"
 	"net/http"
 	"testing"
 
@@ -15,8 +16,8 @@ type ResPonseType struct {
 
 //To do...
 func TestSendFunctionalityGetMethod(t *testing.T) {
-	var options Request
-	options.Method = GET
+	var options baseRequest.Request
+	options.Method = baseRequest.GET
 	options.Url = "https://catfact.ninja/fact"
 	var res ResPonseType
 	options.Callback = func(response *http.Response) error {
@@ -44,13 +45,13 @@ func TestSendFunctionalityPostMethod(t *testing.T) {
 	type CustomerReponse struct {
 		Success bool `json:"success"`
 	}
-	var options Request
+	var options baseRequest.Request
 	var body Body
 	body.id = 78912
 	body.Customer = "ason Sweet"
 	body.Quantity = 2
 	body.Price = 18.08
-	options.Method = POST
+	options.Method = baseRequest.POST
 	options.Body = body
 	options.Url = "https://reqbin.com/echo/post/json"
 	var res CustomerReponse
