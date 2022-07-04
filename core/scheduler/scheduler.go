@@ -7,6 +7,7 @@ import (
 //########################################################################################################################
 //Function to schedule a job instance
 func Schedule(job job.Job) {
+
 	job.Run(job)
 }
 
