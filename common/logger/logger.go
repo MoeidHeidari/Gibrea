@@ -11,7 +11,7 @@ import (
 
 type Report struct {
 	JobId     uuid.UUID   `json:"jobId"`
-	Message   string      `json:"message"`
+	Message   interface{} `json:"message"`
 	ProcessId int         `json:"processId"`
 	Level     LogLevel    `json:"logLevel"`
 	Detail    interface{} `json:"detail"`
@@ -48,6 +48,7 @@ type LoggerOptions struct {
 
 var file os.File
 var LogOptions LoggerOptions
+var LoggerReport Report
 
 //========================================================================================================================
 func InitLogger(options LoggerOptions) error {

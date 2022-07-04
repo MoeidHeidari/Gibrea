@@ -1,6 +1,6 @@
 config:
-  base_address: https://https://git.techpal.ru/
-  auth_token: 8c151ab6d25380a8b3018a2f5c4a40ac8ec06836
+  base_address: https://git.techpal.ru/
+  auth_token: 7b7b0eddf3228937966775bea58fd03ff6c6ba58
   owner: comfortech
   tasks:
     - task:
