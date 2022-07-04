@@ -1,24 +1,26 @@
 package common
 
 import (
+	"encoding/json"
+	"errors"
 	"log"
 	"os"
 
-	"github.com/xtgo/uuid"
+	"github.com/google/uuid"
 )
 
-type JobReport struct {
-	JobId     uuid.UUID
-	Message   int
-	ProcessId int
-	LogLevel  LogLevel
+type Report struct {
+	JobId     uuid.UUID   `json:"jobId"`
+	Message   string      `json:"message"`
+	ProcessId int         `json:"processId"`
+	Level     LogLevel    `json:"logLevel"`
+	Detail    interface{} `json:"detail"`
+	TaskId    uuid.UUID   `json:"taskId"`
 }
 
-type TaskReprot struct {
+type MigrationReport struct {
 	taskId   uuid.UUID
-	jobId    uuid.UUID
-	message  string
-	LogLevel LogLevel
+	RepoName string
 }
 
 //...................................................................
@@ -51,7 +53,7 @@ var LogOptions LoggerOptions
 func InitLogger(options LoggerOptions) error {
 	LogOptions = options
 	if options.PrintDestination == File {
-		f, err := os.OpenFile(options.FileAddress, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+		f, err := os.OpenFile(options.FileAddress, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
 		if err != nil {
 			return err
 		}
@@ -65,6 +67,27 @@ func InitLogger(options LoggerOptions) error {
 	}
 
 	return nil
+}
+
+//========================================================================================================================
+func PrintLog(report Report) error {
+	if contains(LogOptions.LogLevels, report.Level) {
+		logInfo, _ := json.Marshal(report)
+		log.Println(string(logInfo))
+		return nil
+	}
+	return errors.New("log level is not allowed")
+}
+
+//========================================================================================================================
+func contains(slice []LogLevel, item LogLevel) bool {
+	set := make(map[string]struct{}, len(slice))
+	for _, s := range slice {
+		set[string(s)] = struct{}{}
+	}
+
+	_, ok := set[string(item)]
+	return ok
 }
 
 //========================================================================================================================
