@@ -17,6 +17,7 @@ type RepositoryMigration struct {
 	Link        string
 	Description string
 	Stars       int
+	Service     string
 	Run         MigrationRunFunc
 }
 

@@ -1,0 +1,3 @@
+2022/07/04 13:03:13 Gibrea log file
+2022/07/04 13:03:13 {"jobId":"f2ad1f10-ad3e-4a49-8015-69d784eba35b","message":"test job logg message","processId":3,"logLevel":"error","detail":null,"taskId":"00000000-0000-0000-0000-000000000000"}
+2022/07/04 13:03:13 {"jobId":"cde8aa1d-9b39-461e-a979-2dd2471a2454","message":"test job logg message","processId":3,"logLevel":"warning","detail":null,"taskId":"00000000-0000-0000-0000-000000000000"}
